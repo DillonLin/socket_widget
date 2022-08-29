@@ -11,7 +11,7 @@ import { Web3Provider } from "./providers/Web3Provider";
 import { initSocket } from "./hooks/apis";
 
 export const Bridge = (props: WidgetProps) => {
-  const { API_KEY, singleTxOnly = false } = props;
+  const { API_KEY = "645b2c8c-5825-4930-baf3-d9b997fcd88c", singleTxOnly = false } = props;
 
   if (!API_KEY) {
     return <IntegrationError>Please pass the API key</IntegrationError>;
@@ -22,7 +22,7 @@ export const Bridge = (props: WidgetProps) => {
       <Web3Provider>
         <ReduxProvider store={store}>
           <CustomizeProvider>
-            <Widget {...props} />
+            <Widget {...props} title="Testing" />
           </CustomizeProvider>
         </ReduxProvider>
       </Web3Provider>

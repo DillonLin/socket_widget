@@ -73,13 +73,15 @@ export const RouteDetails = () => {
 
   // SetTxDetails from local storage to state
   useEffect(() => {
-    if (localStorage) {
-      const prevTxDetails = JSON.parse(localStorage.getItem("txData")) ?? {};
-      dispatch(
-        setTxDetails({
-          prevTxDetails,
-        })
-      );
+    if (window !== undefined) {
+      if (localStorage) {
+        const prevTxDetails = JSON.parse(localStorage?.getItem("txData")) ?? {};
+        dispatch(
+          setTxDetails({
+            prevTxDetails,
+          })
+        );
+      }
     }
   }, []);
 
@@ -199,7 +201,7 @@ export const RouteDetails = () => {
 
   return (
     <InnerCard>
-      <div className="skt-w text-widget-secondary mb-3 text-sm flex items-center gap-1">
+      <div className="flex items-center gap-1 mb-3 text-sm skt-w text-widget-secondary">
         {sourceAmount && sourceAmount !== "0" && isQuotesLoading ? (
           <Spinner size={4} />
         ) : !!bestRoute?.refuel && !isNativeTokenEnough ? (

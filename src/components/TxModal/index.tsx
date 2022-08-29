@@ -89,7 +89,7 @@ export const TxModal = ({ style }) => {
     stepIndex: number,
     value: { hash: string; userTxType: string }
   ): void {
-    const prevTxDetails = JSON.parse(localStorage.getItem("txData")) ?? {};
+    const prevTxDetails = JSON.parse(localStorage?.getItem("txData")) ?? {};
     const prevTxDetailsAccount = prevTxDetails[account];
 
     // create account key if doesn't exist
@@ -114,7 +114,12 @@ export const TxModal = ({ style }) => {
       };
     }
 
-    localStorage.setItem("txData", JSON.stringify(prevTxDetails));
+    if (window !== undefined) {
+      if (localStorage) {
+        localStorage?.setItem("txData", JSON.stringify(prevTxDetails));
+      }
+    }
+    
     return prevTxDetails;
   }
 
@@ -389,7 +394,7 @@ export const TxModal = ({ style }) => {
     const _modalTitle = (
       <span className="flex items-center gap-1">
         {isSameChainSwap ? "Swap" : "Bridging"} transaction{" "}
-        <span className="text-xs text-widget-primary text-opacity-70 font-normal">
+        <span className="text-xs font-normal text-widget-primary text-opacity-70">
           {currentRoute?.route?.activeRouteId
             ? ` - #${currentRoute?.route?.activeRouteId}`
             : userTx?.activeRouteId
@@ -417,8 +422,8 @@ export const TxModal = ({ style }) => {
       disableClose={isApproving || txInProgress}
       style={style}
     >
-      <div className="skt-w flex flex-col flex-1 overflow-hidden justify-between relative">
-        <div className="skt-w flex-1 overflow-y-auto">
+      <div className="relative flex flex-col justify-between flex-1 overflow-hidden skt-w">
+        <div className="flex-1 overflow-y-auto skt-w">
           <TokenDetailsRow
             srcDetails={{
               token: currentRoute?.sourceTokenDetails?.token,
@@ -431,7 +436,7 @@ export const TxModal = ({ style }) => {
             srcRefuel={refuelSourceToken}
             destRefuel={refuelDestToken}
           />
-          <div className="skt-w border-b border-widget-secondary" />
+          <div className="border-b skt-w border-widget-secondary" />
 
           {currentRoute?.route?.userTxs?.length > 1 && (
             <div className="skt-w px-3.5 py-3 mt-2">
@@ -444,7 +449,7 @@ export const TxModal = ({ style }) => {
             </div>
           )}
 
-          <div className="skt-w px-3 py-3">
+          <div className="px-3 py-3 skt-w">
             <TxStepDetails
               activeRoute={currentRoute?.route}
               refuel={currentRoute?.refuel}
@@ -459,7 +464,7 @@ export const TxModal = ({ style }) => {
           </div>
         </div>
 
-        <div className="skt-w p-3 shrink-0">
+        <div className="p-3 skt-w shrink-0">
           {!txCompleted && (
             <>
               {retryEnabled ? (
